@@ -10,6 +10,20 @@ class CustomerService:
         return customer
 
 
+    @staticmethod
+    def update_customer(customer, **data):
+        model_fields = [field.name for field in customer._meta.fields]
+        for field, value in data.items():
+            if field in model_fields:
+                setattr(customer, field, value)
+        customer._allow_save = True  # 👈 Qo‘shish kerak
+        customer.save()
+        return customer
+
+
+
+
+
 #
 # class CustomerService:
 #     # @staticmethod
